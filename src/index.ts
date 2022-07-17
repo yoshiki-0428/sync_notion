@@ -45,17 +45,17 @@ const main = async () => {
     n2m.setCustomTransformer('image', async (block: any): Promise<string> => {
       // @ts-ignore
       const {image} = block;
-      if (!image?.file || !image?.external) return '';
+      if (!image.file || !image.external) return '';
 
       console.log('image fetch start::')
-      const image_caption_plain = block.caption
+      const image_caption_plain = image.caption
         .map((item: any) => item.plain_text)
         .join("");
-      if (block.type === "external") {
-        const fileUrl = await uploadToUploadCare(block.external.url)
+      if (image.type === "external") {
+        const fileUrl = await uploadToUploadCare(image.external.url)
         return `![${image_caption_plain}](${fileUrl})`
-      } else if (block.type === "file") {
-        const fileUrl = await uploadToUploadCare(block.file.url)
+      } else if (image.type === "file") {
+        const fileUrl = await uploadToUploadCare(image.file.url)
         return `![${image_caption_plain}](${fileUrl})`
       } else {
         return ''
