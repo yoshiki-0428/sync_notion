@@ -45,14 +45,15 @@ const main = async () => {
     n2m.setCustomTransformer('image', async (block: any): Promise<string> => {
       // @ts-ignore
       const {image} = block;
-      console.log('image fetch start::')
       const image_caption_plain = image.caption
         .map((item: any) => item.plain_text)
         .join("");
       if (image.type === "external") {
+        console.log('image fetch start::external', image.external.url)
         const fileUrl = await uploadToUploadCare(image.external.url)
         return `![${image_caption_plain}](${fileUrl})`
       } else if (image.type === "file") {
+        console.log('image fetch start::file', image.file.url)
         const fileUrl = await uploadToUploadCare(image.file.url)
         return `![${image_caption_plain}](${fileUrl})`
       } else {
@@ -64,7 +65,7 @@ const main = async () => {
       const {embed} = block;
       if (!embed?.url) return '';
 
-      console.log('convert embed::start::url', embed.url)
+      console.log('embed convert::start::url', embed.url)
       if (embed.url.indexOf("https://maps.app.goo.gl") !== -1) {
         return `[Google Mapで開く](${embed.url})`
       }
