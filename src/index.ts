@@ -45,8 +45,6 @@ const main = async () => {
     n2m.setCustomTransformer('image', async (block: any): Promise<string> => {
       // @ts-ignore
       const {image} = block;
-      if (!image.file || !image.external) return '';
-
       console.log('image fetch start::')
       const image_caption_plain = image.caption
         .map((item: any) => item.plain_text)
