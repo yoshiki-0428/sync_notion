@@ -1,6 +1,6 @@
-import {DEFAULT_IMAGE} from "./env";
+import {BLOG_DEFAULT_YML, BLOG_DEFAULT_IMAGE} from "./env";
 
-export const parseType = (key: string, field: any): any => {
+const parseType = (key: string, field: any): any => {
   switch (field.type) {
     case 'title':
       if (field.title.length !== 0) {
@@ -23,7 +23,7 @@ export const parseType = (key: string, field: any): any => {
       if (field.files.length !== 0) {
         return parseType(key, field.files[0]);
       } else {
-        return `${key}: ${DEFAULT_IMAGE}`;
+        return `${key}: ${BLOG_DEFAULT_IMAGE}`;
       }
     case 'external':
       return `${key}: ${field.external.url}`;
@@ -50,8 +50,8 @@ export const parseType = (key: string, field: any): any => {
   return '';
 }
 
-export const parseProperty = (properties: any, defaultContent = 'template: SinglePost\nstatus: Published\ncategories:\n  - category: 国内旅行') => {
-  const contents = [defaultContent]
+export const parseProperty = (properties: any) => {
+  const contents = [BLOG_DEFAULT_YML]
   for (let key in properties) {
     const field = properties[key]
 

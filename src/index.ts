@@ -7,7 +7,7 @@ import {promises as fs} from "fs";
 import {BLOG_PATH} from "./util/env";
 import {extract} from "oembed-parser";
 import {parseProperty} from "./util/field-to-yml";
-import {ListBlockChildrenResponseResult} from "notion-to-md/build/types";
+import {uploadToUploadCare} from "./util/image";
 
 const n2m = new NotionToMarkdown({ notionClient });
 
@@ -42,22 +42,25 @@ const main = async () => {
 
     const frontmatter = '---\n' + parseProperty(result.properties) + '\n---\n'
 
-    n2m.setCustomTransformer('image', async (block: ListBlockChildrenResponseResult): Promise<string> => {
-      console.log('image fetch ::')
-      console.log(block)
-      // const image_caption_plain = block.caption
-      //   .map((item) => item.plain_text)
-      //   .join("");
-      // if (block.type === "external") {
-      //   const fileUrl = await uploadToUploadCare(block.external.url)
-      //   return `![](${fileUrl})`
-      // } else if (block.type === "file") {
-      //   const fileUrl = await uploadToUploadCare(block.file.url)
-      //   return `![](${fileUrl})`
-      // }
-      return ''
-    })
+    n2m.setCustomTransformer('image', async (block: any): Promise<string> => {
+      // @ts-ignore
+      const {image} = block;
+      if (!image?.file || !image?.external) return '';
 
+      console.log('image fetch start::')
+      const image_caption_plain = block.caption
+        .map((item: any) => item.plain_text)
+        .join("");
+      if (block.type === "external") {
+        const fileUrl = await uploadToUploadCare(block.external.url)
+        return `![${image_caption_plain}](${fileUrl})`
+      } else if (block.type === "file") {
+        const fileUrl = await uploadToUploadCare(block.file.url)
+        return `![${image_caption_plain}](${fileUrl})`
+      } else {
+        return ''
+      }
+    })
     n2m.setCustomTransformer('embed', async (block): Promise<string> => {
       // @ts-ignore
       const {embed} = block;
@@ -86,8 +89,7 @@ const main = async () => {
     await fs.writeFile(`${BLOG_PATH}/page--${result.id}--${result.last_edited_time}.md`, markdownFile);
   }
 
-
-  console.log('hello!')
+  console.log('notion data reading was complete!!')
 }
 
 main()
