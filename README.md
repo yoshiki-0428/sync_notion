@@ -1,6 +1,8 @@
 # sync_notionの概要
 
-notion-to-mdを利用したMarkdown変換ツールです。
+notion-to-mdを利用したMarkdown変換ツールです。自分用にカスタマイズしているので注意
+
+公式: https://github.com/souvikinator/notion-to-md
 
 notion用にイチからブログを構築する人が辛い人向けに開発しました。
 
