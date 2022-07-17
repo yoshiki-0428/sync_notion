@@ -1,5 +1,5 @@
 import * as dotenv from 'dotenv'
-dotenv.config()
+dotenv.config({ debug: true, override: true })
 
 import {NotionToMarkdown} from "notion-to-md";
 import {getNotionQuery, notionClient} from "./util/notion";
