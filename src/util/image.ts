@@ -5,7 +5,7 @@ export const uploadToUploadCare = async (href: string): Promise<string> => {
   try {
     const file = await new UploadClient({ publicKey: UPLOADCARE_PUBLIC_KEY })
       .uploadFile(href)
-    return file.cdnUrl || file.s3Url || href
+    return file.cdnUrl || file.originalUrl || href
   } catch (e) {
     console.error("Upload was failed. e: ", e);
     return href
