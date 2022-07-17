@@ -1,0 +1,34 @@
+{
+  "name": "node",
+  "version": "1.0.0",
+  "engines": {
+    "node": ">=12"
+  },
+  "main": "./build",
+  "types": "./build/index.d.ts",
+  "scripts": {
+    "prepare": "npm run build",
+    "build": "tsc",
+    "prebuild": "npm run clean",
+    "clean": "rm -rf ./build",
+    "test": "jest",
+    "test:watch": "jest -w"
+  },
+  "files": [
+    "build/**"
+  ],
+  "author": "yoshikiohashi <rrrtcdish2+npm@gmail.com> (https://yoshikiohashi.dev/)",
+  "license": "ISC",
+  "dependencies": {
+    "@types/jest": "^27.4.1",
+    "@types/markdown-table": "^2.0.0",
+    "@notionhq/client": "^1.0.4",
+    "@uploadcare/upload-client": "^4.2.1",
+    "jest": "^27.4.7",
+    "ts-jest": "^27.1.3",
+    "typescript": "^4.5.4",
+    "dotenv": "^16.0.1",
+    "notion-to-md": "^2.3.3",
+    "oembed-parser": "^3.0.6"
+  }
+}
