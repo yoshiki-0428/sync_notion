@@ -1,4 +1,6 @@
-import 'dotenv/config'
+import * as dotenv from 'dotenv'
+dotenv.config()
+
 import {NotionToMarkdown} from "notion-to-md";
 import {getNotionQuery, notionClient} from "./util/notion";
 import {promises as fs} from "fs";
